@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+</head>
+<body>
+<h2>用户登录</h2>
+<h3 class="error_msg">
+    <!--- 错误信息显示在这里 --->
+    {{ msg_info }}
+</h3>
+<!-- 这里使用路由反向解析得到路径的方式 -->
+<!-- 登陆提交地址本来是 /author/login/ -->
+<!-- 登陆地址的路由是 app_name:'author'; path('author/login/', views.login, name='login') -->
+<!-- 重构请求路由使用模板url标签：{% url 'author:login' %}，
+表明解析app_name=author的路由模块中，name=login的路由对象，查询其请求路径和处理函数 -->
+    <form action="{% url 'author:login' %}" method="POST">
+        <!-- 用户令牌认证 模板标签 -->
+        {% csrf_token %}
+        <label for="username">账号:</label>
+        <input type="text" id="username" name="username" ><br />
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" ><br />
+        <input type="submit" value="登录">
+        <input type="reset" value="重置" >
+    </form>
+<h3>
+</h3>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+</head>
+<body>
+<h2>新用户注册</h2>
+<h3 class="error_msg">
+    <!--- 错误信息显示在这里 --->
+    {{ msg_info }}
+    </h3>
+    <form action="{% url 'author:register' %}" method="POST">
+        <!-- 用户令牌认证 模板标签 -->
+        {% csrf_token %}
+        <label for="username">账号:</label>
+        <input type="text" name="username" id="username" ><br />
+        <label for="password">密码:</label>
+        <input type="password" name="password" id="password" ><br />
+        <label for="realname">姓名:</label>
+        <input type="text" name="realname" id="realname"  ><br />
+        <input type="submit" value="立即注册">
+    </form>
+</body>
+</html>
