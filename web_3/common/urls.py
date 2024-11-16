@@ -1,8 +1,8 @@
-# from django.urls import path
-# from . import views
-#
-# urlpatterns = [
-#     path('', views.home, name='home'),
-#     path('about/', views.about, name='about'),
-#     path('contact/', views.contact, name='contact'),
-# ]
+from django.urls import path
+from . import views
+
+app_name = 'common' #应用名称
+
+urlpatterns = [ #路由匹配
+    path('', views.index, name='index'),
+]

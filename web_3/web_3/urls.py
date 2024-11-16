@@ -17,11 +17,16 @@ from django.contrib import admin
 from django.urls import path,include,register_converter
 from .route_converter import RouteYearConverter
 
+handler400 = 'common.views.page400error' # 全局400页面
+handler404 = 'common.views.page400error' # 全局404页面
+handler403 = 'common.views.page403error' # 全局403页面
+handler500 = 'common.views.page500error' # 全局500页面
+
 # 注册年份类型转换器
 register_converter(RouteYearConverter, 'yyyy')
 urlpatterns = [
     path('admin/', admin.site.urls),    # 后台管理模块
-    # path('', include('common.urls')), # 公共模块
+    path('', include('common.urls')), # 公共模块
     path('', include('author.urls')),  # 用户模块
     path('', include('article.urls')), # 文章模块
 
@@ -38,7 +43,3 @@ urlpatterns = [
     # path('author/', include('author.urls')),
 ]
 
-# handler400 = 'common.views.page400error' # 全局400页面
-# handler404 = 'common.views.page400error' # 全局404页面
-# handler403 = 'common.views.page403error' # 全局403页面
-# handler500 = 'common.views.page500error' # 全局500页面

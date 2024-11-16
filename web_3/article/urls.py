@@ -11,13 +11,18 @@ app_name = 'article'
 # 添加路由配置
 urlpatterns = [
     path('article/',include([
+        # 11.16 更新
         path('', views.articles_list, name='articles_list'),
+        path('<uuid:author_id>/',views.articles_author,name='articles_author'),
+        path('<uuid:article_id>/detail/',views.article_detail,name='article_detail'),
 
         # 11.15修改 下列两行存在问题，暂时注释掉
         # path('/<yyyy:year>/', views.articles_year,name='articles_year'),  # 根据年份获取文章列表
         # path('/<yyyy:year>/<int:month>/', views.article_month),  # 根据年月获取文章列表
+        # 11.16 问题解决，修改如下
+        path('<yyyy:year>/', views.articles_year, name='articles_year'),  # 根据年份获取文章列表
+        path('<yyyy:year>/<int:month>/', views.article_month),  # 根据年月获取文章列表
 
-        path('<uuid:author_id>/', views.articles_author, name='articles_author'),  # 根据作者ID获取文章列表
         path('<uuid:author_id>/liked/', views.articles_liked, name='articles_liked'),
         path('<uuid:author_id>/collected/', views.articles_collected, name='articles_collected'),
         path('<uuid:author_id>/detail/', views.article_detail, name='article_detail'),

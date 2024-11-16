@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>用户首页</title>
+  <title>网站管理系统首页</title>
   <style>
     body {
       background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;
@@ -16,7 +16,7 @@
       height: 100vh;
     }
 
-    #user_home_box {
+    #home_box {
       background-color: #00000060;
       border-radius: 10px;
       padding: 40px;
@@ -26,17 +26,23 @@
       max-width: 600px;
     }
 
-    h2 {
+    h1 {
       color: #ffffff90;
       margin-bottom: 20px;
     }
 
-    .user_info {
-      margin-bottom: 20px;
+    h3 {
+      margin: 10px 0;
     }
 
-    .user_info h3 {
-      margin: 10px 0;
+    a {
+      color: #b94648;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
     .button {
@@ -55,29 +61,16 @@
     .button:hover {
       opacity: 0.9;
     }
-
-    a {
-      color: #b94648;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
-  <div id="user_home_box">
-    <h2>用户信息展示</h2>
-    <div class="user_info">
-      <h3>当前登录用户账号：{{ request.session.author.username }}</h3>
-      <h3>当前登录用户姓名：{{ request.session.author.realname }}</h3>
-    </div>
-    <div class="navigation">
-      <a href="/" class="button">返回首页</a>
-      <a href="/article/articles/{{ request.session.author.id }}/" class="button">查看我的网站</a>
-    </div>
+  <div id="home_box">
+    <h1>网站管理系统首页</h1>
+    <h3>欢迎来到网站管理系统，这里可以帮助你管理网站的地址，欢迎大家交流。</h3>
+    <h3><a href="/author/login/" class="button">登录</a></h3>
+    <h3><a href="/author/register/" class="button">注册</a></h3>
+    <!-- 如果需要查询作者文章的功能 -->
+    <!-- <h3><a href="/article/articles{{ request.session.author.id }}/" class="button">查询作者文章</a></h3> -->
   </div>
 </body>
 </html>
@@ -85,16 +78,14 @@
 {#<html lang="en">#}
 {#<head>#}
 {#    <meta charset="UTF-8">#}
-{#    <title>用户首页</title>#}
+{#    <title>网站管理系统首页</title>#}
 {#</head>#}
-{#<meta charset="UTF-8">#}
-{#<title>用户首页</title>#}
 {#<body>#}
-{#<h2>用户信息展示</h2>#}
-{#<div>#}
-{#    <h3>当前登录用户账号：{{ request.session.author.username }}</h3>#}
-{#    <h3>当前登录用户姓名：{{ request.session.author.realname }}</h3>#}
-{#</div>#}
-{##}
+{#    <h1>网站管理系统首页</h1>#}
+{#    <h3>欢迎来到网站管理系统，这里可以帮助你管理网站的地址，欢迎大家交流。</h3>#}
+{#     <!--{{ messages }}__messages__-->#}
+{#    <h3><a href="/article/articles{{ request.session.author.id }}/"> 查询作者文章</a></h3>#}
+{#    <h3><a href="/author/login/"> 登录</a></h3>#}
+{#    <h3><a href="/author/register/"> 注册</a></h3>#}
 {#</body>#}
 {#</html>#}
