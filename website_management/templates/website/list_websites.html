@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website List</title>
+  <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #list_box {
+      width: 300px;
+      background-color: #00000060;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      color: #fff;
+    }
+
+    h1 {
+      color: #ffffff90;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #30cfd0;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    form {
+      display: inline;
+    }
+
+    button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div id="list_box">
+    <h1>Website List</h1>
+    <ul>
+      {% for website in websites %}
+        <li>
+          <a href="{{ website.url }}">{{ website.url }}</a> - {{ website.description }}
+          <form method="POST" action="{% url 'website:delete' website.web_id %}">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'website:add' %}" class="btn">Add new website</a>
+  </div>
+</body>
+</html>
+
+{#第一次对齐样式 list_websites.html#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Website List</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#    }#}
+{##}
+{#    #list_box {#}
+{#      width: 300px;#}
+{#      background-color: #00000060;#}
+{#      border-radius: 10px;#}
+{#      padding: 30px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#    }#}
+{##}
+{#    h1 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    ul {#}
+{#      list-style: none;#}
+{#      padding: 0;#}
+{#    }#}
+{##}
+{#    li {#}
+{#      margin-bottom: 10px;#}
+{#    }#}
+{##}
+{#    a {#}
+{#      color: #30cfd0;#}
+{#      text-decoration: none;#}
+{#    }#}
+{##}
+{#    a:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{##}
+{#    form {#}
+{#      display: inline;#}
+{#    }#}
+{##}
+{#    button {#}
+{#      padding: 5px 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 14px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#    }#}
+{##}
+{#    button:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    .btn {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#      text-decoration: none;#}
+{#      display: inline-block;#}
+{#      text-align: center;#}
+{#      margin-top: 20px;#}
+{#    }#}
+{##}
+{#    .btn:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <a href="{{ website.url }}">{{ website.url }}</a> - {{ website.description }}#}
+{#          <form method="POST" action="{% url 'website:delete' website.web_id %}">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit">Delete</button>#}
+{#          </form>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" class="btn">Add new website</a>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Website List</title>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#        {% for website in websites %}#}
+{#            <li>#}
+{#                <a href="{{ website.url }}">{{ website.url }}</a> - {{ website.description }}#}
+{#                <form method="POST" action="{% url 'website:delete' website.web_id %}" style="display:inline;">#}
+{#                <form method="POST" action="{% url 'website:delete' website.id %}" style="display:inline;">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit">Delete</button>#}
+{#                </form>#}
+{#            </li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}">Add new website</a>#}
+{#</body>#}
+{#</html>#}

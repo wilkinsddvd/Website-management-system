@@ -1,0 +1,89 @@
+{#{% load static %}#}
+{#<link rel="stylesheet" href = "{% static 'css/index.css' %}">#}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户首页</title>
+  <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #user_home_box {
+      background-color: #00000060;
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      color: #fff;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    h2 {
+      color: #ffffff90;
+      margin-bottom: 20px;
+    }
+
+    .user_info {
+      margin-bottom: 20px;
+    }
+
+    .user_info h3 {
+      margin: 10px 0;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+      text-decoration: none;
+    }
+
+    .button:hover {
+      opacity: 0.9;
+    }
+
+    a {
+      color: #b94648;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="user_home_box">
+    <h2>用户信息展示</h2>
+    <div class="user_info">
+      <h3>当前登录用户账号：{{ request.session.author.username }}</h3>
+{#      <h3>当前登录用户姓名：{{ request.session.author.realname }}</h3>#}
+    </div>
+    <div class="navigation">
+      <a href="/" class="button">返回首页</a>
+        <a href="/user/logout/" class="button">退出登录</a>
+        <a href="/website/" class="button">查看网站列表</a>
+        
+{#      <a href="/article/" class="button">查看我的网站</a>#}
+    </div>
+  </div>
+</body>
+</html>

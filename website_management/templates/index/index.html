@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网站管理系统首页</title>
+  <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #home_box {
+      background-color: #00000060;
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      color: #fff;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    h1 {
+      color: #ffffff90;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      margin: 10px 0;
+    }
+
+    a {
+      color: #b94648;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+      text-decoration: none;
+    }
+
+    .button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div id="home_box">
+    <h1>网站管理系统首页</h1>
+    <h3>欢迎来到网站管理系统，这里可以帮助你管理网站的地址</h3>
+    <h3><a href="user/login/" class="button">登录</a></h3>
+    <h3><a href="user/register/" class="button">注册</a></h3>
+    <!-- 如果需要查询作者文章的功能 -->
+    <!-- <h3><a href="/article/articles{{ request.session.author.id }}/" class="button">查询作者文章</a></h3> -->
+  </div>
+</body>
+</html>

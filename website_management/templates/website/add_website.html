@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Website</title>
+  <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #form_box {
+      width: 300px;
+      background-color: #00000060;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      color: #fff;
+    }
+
+    h1 {
+      color: #ffffff90;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="url"],
+    textarea {
+      width: calc(100% - 20px);
+      margin-bottom: 20px;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    button,
+    a.btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    a.btn {
+      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);
+    }
+
+    button:hover,
+    a.btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div id="form_box">
+    <h1>Add Website</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="url">URL:</label>
+      <input type="url" id="url" name="url" required>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description"></textarea>
+      <button type="submit">Add</button>
+    </form>
+    <a href="{% url 'website:list' %}" class="btn">Back to list</a>
+  </div>
+</body>
+</html>
+
+{#第一次对齐样式#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Add Website</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#    }#}
+{##}
+{#    #form_box {#}
+{#      width: 300px;#}
+{#      background-color: #00000060;#}
+{#      border-radius: 10px;#}
+{#      padding: 30px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#    }#}
+{##}
+{#    h1 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    label {#}
+{#      display: block;#}
+{#      margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    input[type="url"],#}
+{#    textarea {#}
+{#      width: calc(100% - 20px);#}
+{#      margin-bottom: 20px;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-bottom: 2px solid #fff;#}
+{#      background: transparent;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#    }#}
+{##}
+{#    button,#}
+{#    a.btn {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#      text-decoration: none;#}
+{#      display: inline-block;#}
+{#      text-align: center;#}
+{#    }#}
+{##}
+{#    a.btn {#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#    }#}
+{##}
+{#    button:hover,#}
+{#    a.btn:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="form_box">#}
+{#    <h1>Add Website</h1>#}
+{#    <form method="POST">#}
+{#      {% csrf_token %}#}
+{#      <label for="url">URL:</label>#}
+{#      <input type="url" id="url" name="url" required>#}
+{#      <label for="description">Description:</label>#}
+{#      <textarea id="description" name="description"></textarea>#}
+{#      <button type="submit">Add</button>#}
+{#    </form>#}
+{#    <a href="{% url 'website:list' %}" class="btn">Back to list</a>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Add Website</title>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Add Website</h1>#}
+{#    <form method="POST">#}
+{#        {% csrf_token %}#}
+{#        <label for="url">URL:</label>#}
+{#        <input type="url" id="url" name="url" required><br>#}
+{#        <label for="description">Description:</label>#}
+{#        <textarea id="description" name="description"></textarea><br>#}
+{#        <button type="submit">Add</button>#}
+{#    </form>#}
+{#    <a href="{% url 'website:list' %}">Back to list</a>#}
+{#</body>#}
+{#</html>#}

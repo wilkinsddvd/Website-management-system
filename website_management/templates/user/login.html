@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #login_box {
+      width: 300px;
+      background-color: #00000060;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      color: #fff;
+    }
+
+    h2 {
+      color: #ffffff90;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: calc(100% - 20px);
+      margin-bottom: 20px;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+    }
+
+    input[type="reset"] {
+      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);
+    }
+
+    input[type="submit"]:hover,
+    input[type="reset"]:hover {
+      opacity: 0.9;
+    }
+
+    #register_link {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .error_msg {
+      color: #ff4d4d;
+      margin-bottom: 15px;
+    }
+
+    a {
+      color: #b94648;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="login_box">
+    <h2>Login</h2>
+    {% if msg_code == -1 %}
+    <div class="error_msg">
+      {{ msg_info }}
+    </div>
+    {% endif %}
+    <form action="{% url 'user:login' %}" method="POST">
+      {% csrf_token %}
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <input type="submit" value="Login">
+      <input type="reset" value="Reset">
+    </form>
+    <div id="register_link">
+      Not registered? <a href="{% url 'user:register' %}">Register here</a>
+    </div>
+  </div>
+</body>
+</html>
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Login Page</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#    }#}
+{##}
+{#    #login_box {#}
+{#      width: 300px;#}
+{#      background-color: #00000060;#}
+{#      border-radius: 10px;#}
+{#      padding: 30px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#    }#}
+{##}
+{#    h2 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    label {#}
+{#      display: block;#}
+{#      margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    input[type="text"],#}
+{#    input[type="password"] {#}
+{#      width: calc(100% - 20px);#}
+{#      margin-bottom: 20px;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-bottom: 2px solid #fff;#}
+{#      background: transparent;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#    }#}
+{##}
+{#    input[type="submit"],#}
+{#    input[type="reset"] {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#    }#}
+{##}
+{#    input[type="reset"] {#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#    }#}
+{##}
+{#    input[type="submit"]:hover,#}
+{#    input[type="reset"]:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    #register_link {#}
+{#      margin-top: 10px;#}
+{#      font-size: 14px;#}
+{#    }#}
+{##}
+{#    .error_msg {#}
+{#      color: #ff4d4d;#}
+{#      margin-bottom: 15px;#}
+{#    }#}
+{##}
+{#    a {#}
+{#      color: #b94648;#}
+{#      text-decoration: none;#}
+{#    }#}
+{##}
+{#    a:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="login_box">#}
+{#    <h2>Login</h2>#}
+{#    {% if error %}#}
+{#    <div class="error_msg">#}
+{#      Login failed: {{ error }}#}
+{#    </div>#}
+{#    {% endif %}#}
+{#    <form action="{% url 'user:login' %}" method="POST">#}
+{#      {% csrf_token %}#}
+{#      <label for="username">Username:</label>#}
+{#      <input type="text" id="username" name="username" required>#}
+{##}
+{#      <label for="password">Password:</label>#}
+{#      <input type="password" id="password" name="password" required>#}
+{##}
+{#      <input type="submit" value="Login">#}
+{#      <input type="reset" value="Reset">#}
+{#    </form>#}
+{#    <div id="register_link">#}
+{#      Not registered? <a href="{% url 'user:register' %}">Register here</a>#}
+{#    </div>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Login Page</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#    }#}
+{##}
+{#    #login_box {#}
+{#      width: 300px;#}
+{#      background-color: #00000060;#}
+{#      border-radius: 10px;#}
+{#      padding: 30px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#    }#}
+{##}
+{#    h2 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    label {#}
+{#      display: block;#}
+{#      margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    input[type="text"],#}
+{#    input[type="password"] {#}
+{#      width: calc(100% - 20px);#}
+{#      margin-bottom: 20px;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-bottom: 2px solid #fff;#}
+{#      background: transparent;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#    }#}
+{##}
+{#    input[type="submit"],#}
+{#    input[type="reset"] {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#    }#}
+{##}
+{#    input[type="reset"] {#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#    }#}
+{##}
+{#    input[type="submit"]:hover,#}
+{#    input[type="reset"]:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    #register_link {#}
+{#      margin-top: 10px;#}
+{#      font-size: 14px;#}
+{#    }#}
+{##}
+{#    a {#}
+{#      color: #b94648;#}
+{#      text-decoration: none;#}
+{#    }#}
+{##}
+{#    a:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="login_box">#}
+{#    <h2>Login</h2>#}
+{#    <form action="{% url 'author:login' %}" method="POST">#}
+{#      {% csrf_token %}#}
+{#      <label for="username">Username:</label>#}
+{#      <input type="text" id="username" name="username" required>#}
+{##}
+{#      <label for="password">Password:</label>#}
+{#      <input type="password" id="password" name="password" required>#}
+{##}
+{#      <input type="submit" value="Login">#}
+{#      <input type="reset" value="Reset">#}
+{#    </form>#}
+{#    <div id="register_link">#}
+{#      Not registered? <a href="{% url 'author:register' %}">Register here</a>#}
+{#    </div>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+{#下面这个也挺好#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Login Page</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#    }#}
+{##}
+{#    #login_box {#}
+{#      width: 300px;#}
+{#      background-color: #00000060;#}
+{#      border-radius: 10px;#}
+{#      padding: 30px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#    }#}
+{##}
+{#    h2 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    label {#}
+{#      display: block;#}
+{#      margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    input[type="text"],#}
+{#    input[type="password"] {#}
+{#      width: calc(100% - 20px);#}
+{#      margin-bottom: 20px;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-bottom: 2px solid #fff;#}
+{#      background: transparent;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#    }#}
+{##}
+{#    input[type="submit"],#}
+{#    input[type="reset"] {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#    }#}
+{##}
+{#    input[type="reset"] {#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#    }#}
+{##}
+{#    input[type="submit"]:hover,#}
+{#    input[type="reset"]:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="login_box">#}
+{#    <h2>Login</h2>#}
+{#    <form action="{% url 'author:login' %}" method="POST">#}
+{#      {% csrf_token %}#}
+{#      <label for="username">Username:</label>#}
+{#      <input type="text" id="username" name="username" required>#}
+{##}
+{#      <label for="password">Password:</label>#}
+{#      <input type="password" id="password" name="password" required>#}
+{##}
+{#      <input type="submit" value="Login">#}
+{#      <input type="reset" value="Reset">#}
+{#    </form>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+{#下面这个挺好的#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Document</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat;#}
+{#      background-size: 100% 130%;#}
+{#    }#}
+{##}
+{#    #login_box {#}
+{#      width: 20%;#}
+{#      height: 400px;#}
+{#      background-color: #00000060;#}
+{#      margin: auto;#}
+{#      margin-top: 10%;#}
+{#      text-align: center;#}
+{#      border-radius: 10px;#}
+{#      padding: 50px 50px;#}
+{#    }#}
+{##}
+{#    h2 {#}
+{#      color: #ffffff90;#}
+{#      margin-top: 5%;#}
+{#    }#}
+{##}
+{#    #input_box {#}
+{#      margin-top: 5%;#}
+{#    }#}
+{##}
+{#    label {#}
+{#      color: #fff;#}
+{#    }#}
+{##}
+{#    input {#}
+{#      border: 0;#}
+{#      width: 60%;#}
+{#      font-size: 15px;#}
+{#      color: #fff;#}
+{#      background: transparent;#}
+{#      border-bottom: 2px solid #fff;#}
+{#      padding: 5px 10px;#}
+{#      outline: none;#}
+{#      margin-top: 10px;#}
+{#    }#}
+{##}
+{#    button {#}
+{#      margin-top: 50px;#}
+{#      width: 60%;#}
+{#      height: 30px;#}
+{#      border-radius: 10px;#}
+{#      border: 0;#}
+{#      color: #fff;#}
+{#      text-align: center;#}
+{#      line-height: 30px;#}
+{#      font-size: 15px;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#    }#}
+{##}
+{#    a {#}
+{#      color: #b94648;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="login_box">#}
+{#    <h2>LOGIN</h2>#}
+{#    <form action="{% url 'author:login' %}" method="POST">#}
+{#      <!-- 用户令牌认证 模板标签 -->#}
+{#      {% csrf_token %}#}
+{#      <div id="input_box">#}
+{#        <label for="username">账号:</label>#}
+{#        <input type="text" id="username" name="username" placeholder="请输入用户名">#}
+{#      </div>#}
+{#      <div class="input_box">#}
+{#        <label for="password">密码:</label>#}
+{#        <input type="password" id="password" name="password" placeholder="请输入密码">#}
+{#      </div>#}
+{#      <input type="submit" value="登录">#}
+{#      <input type="reset" value="重置">#}
+{#    </form>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{##}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Document</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat;#}
+{#      background-size: 100% 130%;#}
+{#    }#}
+{##}
+{#    #login_box {#}
+{#      width: 20%;#}
+{#      height: 400px;#}
+{#      background-color: #00000060;#}
+{#      margin: auto;#}
+{#      margin-top: 10%;#}
+{#      text-align: center;#}
+{#      border-radius: 10px;#}
+{#      padding: 50px 50px;#}
+{#    }#}
+{##}
+{#    h2 {#}
+{#      color: #ffffff90;#}
+{#      margin-top: 5%;#}
+{#    }#}
+{##}
+{#    #input-box {#}
+{#      margin-top: 5%;#}
+{#    }#}
+{##}
+{#    span {#}
+{#      color: #fff;#}
+{#    }#}
+{##}
+{#    input {#}
+{#      border: 0;#}
+{#      width: 60%;#}
+{#      font-size: 15px;#}
+{#      color: #fff;#}
+{#      background: transparent;#}
+{#      border-bottom: 2px solid #fff;#}
+{#      padding: 5px 10px;#}
+{#      outline: none;#}
+{#      margin-top: 10px;#}
+{#    }#}
+{##}
+{#    button {#}
+{#      margin-top: 50px;#}
+{#      width: 60%;#}
+{#      height: 30px;#}
+{#      border-radius: 10px;#}
+{#      border: 0;#}
+{#      color: #fff;#}
+{#      text-align: center;#}
+{#      line-height: 30px;#}
+{#      font-size: 15px;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#    }#}
+{##}
+{#    #sign_up {#}
+{#      margin-top: 45%;#}
+{#      margin-left: 60%;#}
+{#    }#}
+{##}
+{#    a {#}
+{#      color: #b94648;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{##}
+{#<body>#}
+{# <form action="{% url 'author:login' %}" method="POST">#}
+{#      <!-- 用户令牌认证 模板标签 -->#}
+{#      {% csrf_token %}#}
+{#      <div id="input_box">#}
+{#        <label for="username">账号:</label>#}
+{#        <input type="text" id="username" name="username" placeholder="请输入用户名">#}
+{#      </div>#}
+{#      <div class="input_box">#}
+{#        <label for="password">密码:</label>#}
+{#        <input type="password" id="password" name="password" placeholder="请输入密码">#}
+{#      </div>#}
+{#      <input type="submit" value="登录">#}
+{#      <input type="reset" value="重置">#}
+{#    </form>#}
+{#  <div id="login_box">#}
+{#    <h2>LOGIN</h2>#}
+{#    <div id="input_box">#}
+{#      <input type="text" id="username" name="username"  placeholder="请输入用户名">#}
+{#    </div>#}
+{#    <div class="input_box">#}
+{#      <input type="password" id="password" name="password" placeholder="请输入密码">#}
+{#    </div>#}
+{#            <input type="submit" value="登录">#}
+{#        <input type="reset" value="重置" >#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>用户登录</title>#}
+{#</head>#}
+{#<body>#}
+{#<h2>用户登录</h2>#}
+{#<h3 class="error_msg">#}
+{#    <!--- 错误信息显示在这里 --->#}
+{#    {{ msg_info }}#}
+{#</h3>#}
+{#<!-- 这里使用路由反向解析得到路径的方式 -->#}
+{#<!-- 登陆提交地址本来是 /author/login/ -->#}
+{#<!-- 登陆地址的路由是 app_name:'author'; path('author/login/', views.login, name='login') -->#}
+{#<!-- 重构请求路由使用模板url标签：{% url 'author:login' %}，#}
+{#表明解析app_name=author的路由模块中，name=login的路由对象，查询其请求路径和处理函数 -->#}
+{#    <form action="{% url 'author:login' %}" method="POST">#}
+{#        <!-- 用户令牌认证 模板标签 -->#}
+{#        {% csrf_token %}#}
+{#        <label for="username">账号:</label>#}
+{#        <input type="text" id="username" name="username" ><br />#}
+{#        <label for="password">密码:</label>#}
+{#        <input type="password" id="password" name="password" ><br />#}
+{#        <input type="submit" value="登录">#}
+{#        <input type="reset" value="重置" >#}
+{#    </form>#}
+{#<h3>#}
+{#</h3>#}
+{#</body>#}
+{#</html>#}
