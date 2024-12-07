@@ -6,21 +6,25 @@
   <title>Website List</title>
   <style>
     body {
-      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
+      font-family: Arial, sans-serif;
     }
 
     #list_box {
-      width: 300px;
-      background-color: #00000060;
+      width: 90%;
+      max-width: 600px;
+      background-color: rgba(0, 0, 0, 0.6);
       border-radius: 10px;
-      padding: 30px;
+      padding: 40px;
       text-align: center;
       color: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
 
     h1 {
@@ -31,23 +35,29 @@
     ul {
       list-style: none;
       padding: 0;
+      text-align: left;
     }
 
     li {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    a {
+    .description {
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    .url {
+      flex: 2;
       color: #30cfd0;
       text-decoration: none;
     }
 
-    a:hover {
+    .url:hover {
       text-decoration: underline;
-    }
-
-    form {
-      display: inline;
     }
 
     button {
@@ -57,14 +67,28 @@
       color: #fff;
       font-size: 14px;
       cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .edit-button {
+      background-image: linear-gradient(to right, #4d94ff, #003366);
+    }
+
+    .edit-button:hover {
+      opacity: 0.9;
+      background-image: linear-gradient(to right, #3a8cd1, #00264d);
+    }
+
+    .delete-button {
       background-image: linear-gradient(to right, #ff4d4d, #a71d2a);
     }
 
-    button:hover {
+    .delete-button:hover {
       opacity: 0.9;
+      background-image: linear-gradient(to right, #e03434, #9f1d1d);
     }
 
-    .btn {
+    #add_button, #return_button {
       width: 100%;
       padding: 10px;
       border: none;
@@ -73,14 +97,18 @@
       font-size: 16px;
       cursor: pointer;
       background-image: linear-gradient(to right, #30cfd0, #330867);
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
       margin-top: 20px;
+      text-align: center;
+      display: inline-block;
     }
 
-    .btn:hover {
+    #add_button:hover, #return_button:hover {
       opacity: 0.9;
+    }
+
+    .error_msg {
+      color: #ff4d4d;
+      margin-bottom: 15px;
     }
   </style>
 </head>
@@ -90,18 +118,873 @@
     <ul>
       {% for website in websites %}
         <li>
-          <a href="{{ website.url }}">{{ website.url }}</a> - {{ website.description }}
-          <form method="POST" action="{% url 'website:delete' website.web_id %}">
+          <div class="description">{{ website.description }}</div>
+          <a href="{{ website.url }}" class="url">{{ website.url }}</a>
+          <form method="POST" action="{% url 'website:edit' website.web_id %}" style="display:inline;">
             {% csrf_token %}
-            <button type="submit">Delete</button>
+            <button type="submit" class="edit-button" title="编辑网站">Edit</button>
+          </form>
+          <form method="POST" action="{% url 'website:delete' website.web_id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="delete-button" title="确认删除">Delete</button>
           </form>
         </li>
       {% endfor %}
     </ul>
-    <a href="{% url 'website:add' %}" class="btn">Add new website</a>
+    <a href="{% url 'website:add' %}" id="add_button">Add new website</a>
+    <a href="/user/index" id="return_button">返回用户界面</a>
   </div>
 </body>
 </html>
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Website List</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center;#}
+{#      background-size: cover;  /* 确保背景图片不变形并覆盖屏幕 */#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#      font-family: Arial, sans-serif;#}
+{#    }#}
+{##}
+{#    #list_box {#}
+{#      width: 90%;  /* 适应各种屏幕尺寸 */#}
+{#      max-width: 600px;  /* 最大宽度限制 */#}
+{#      background-color: rgba(0, 0, 0, 0.6);  /* 使用rgba增加透明度 */#}
+{#      border-radius: 10px;#}
+{#      padding: 40px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);  /* 添加阴影效果 */#}
+{#    }#}
+{##}
+{#    h1 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    ul {#}
+{#      list-style: none;#}
+{#      padding: 0;#}
+{#      text-align: left;  /* 左对齐 */#}
+{#    }#}
+{##}
+{#    li {#}
+{#      margin-bottom: 15px;  /* 增加间距 */#}
+{#      display: flex;  /* 使用flex布局 */#}
+{#      justify-content: space-between;  /* 列表项间添加空间分配 */#}
+{#      align-items: center;  /* 垂直居中按钮 */#}
+{#    }#}
+{##}
+{#    .description {#}
+{#      flex: 1; /* 左边的描述 */#}
+{#      margin-right: 10px;  /* 右边距 */#}
+{#    }#}
+{##}
+{#    .url {#}
+{#      flex: 2; /* 中间的URL */#}
+{#      color: #30cfd0;#}
+{#      text-decoration: none;#}
+{#    }#}
+{##}
+{#    .url:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{##}
+{#    button {#}
+{#      padding: 5px 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 14px;#}
+{#      cursor: pointer;#}
+{#      transition: background 0.3s;  /* 添加过渡效果 */#}
+{#    }#}
+{##}
+{#    .edit-button {#}
+{#      background-image: linear-gradient(to right, #4d94ff, #003366); /* 蓝色渐变 */#}
+{#    }#}
+{##}
+{#    .edit-button:hover {#}
+{#      opacity: 0.9;#}
+{#      background-image: linear-gradient(to right, #3a8cd1, #00264d);#}
+{#    }#}
+{##}
+{#    .delete-button {#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a); /* 删除按钮颜色 */#}
+{#    }#}
+{##}
+{#    .delete-button:hover {#}
+{#      opacity: 0.9;#}
+{#      background-image: linear-gradient(to right, #e03434, #9f1d1d);#}
+{#    }#}
+{##}
+{#    #add_button, #return_button {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#      margin-top: 20px;#}
+{#      text-align: center;#}
+{#      display: inline-block; /* Center the button */#}
+{#    }#}
+{##}
+{#    #add_button:hover, #return_button:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    .error_msg {#}
+{#      color: #ff4d4d;#}
+{#      margin-bottom: 15px;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <div class="description">{{ website.description }}</div>#}
+{#          <a href="{{ website.url }}" class="url">{{ website.url }}</a>#}
+{#          <form method="POST" action="{% url 'website:edit' website.web_id %}" style="display:inline;">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" class="edit-button" title="编辑网站">Edit</button>#}
+{#          </form>#}
+{#          <form method="POST" action="{% url 'website:delete' website.web_id %}" style="display:inline;">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" class="delete-button" title="确认删除">Delete</button>#}
+{#          </form>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" id="add_button">Add new website</a>#}
+{#    <a href="/user/index" id="return_button">返回用户界面</a>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Website List</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#      font-family: Arial, sans-serif;#}
+{#    }#}
+{##}
+{#    #list_box {#}
+{#      width: 90%;#}
+{#      max-width: 600px;#}
+{#      background-color: rgba(0, 0, 0, 0.6);#}
+{#      border-radius: 10px;#}
+{#      padding: 40px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);#}
+{#    }#}
+{##}
+{#    h1 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    ul {#}
+{#      list-style: none;#}
+{#      padding: 0;#}
+{#      text-align: left;#}
+{#    }#}
+{##}
+{#    li {#}
+{#      margin-bottom: 15px;#}
+{#      display: flex;#}
+{#      justify-content: space-between;#}
+{#      align-items: center;#}
+{#    }#}
+{##}
+{#    .description {#}
+{#      flex: 1;#}
+{#      margin-right: 10px;#}
+{#    }#}
+{##}
+{#    .url {#}
+{#      flex: 2;#}
+{#      color: #30cfd0;#}
+{#      text-decoration: none;#}
+{#    }#}
+{##}
+{#    .url:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{##}
+{#    form {#}
+{#      display: inline;#}
+{#    }#}
+{##}
+{#    button {#}
+{#      padding: 5px 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 14px;#}
+{#      cursor: pointer;#}
+{#      transition: background 0.3s;#}
+{#    }#}
+{##}
+{#    .edit-button {#}
+{#      background-image: linear-gradient(to right, #4d94ff, #003366);#}
+{#    }#}
+{##}
+{#    .edit-button:hover {#}
+{#      opacity: 0.9;#}
+{#      background-image: linear-gradient(to right, #3a8cd1, #00264d);#}
+{#    }#}
+{##}
+{#    .delete-button {#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#    }#}
+{##}
+{#    .delete-button:hover {#}
+{#      opacity: 0.9;#}
+{#      background-image: linear-gradient(to right, #e03434, #9f1d1d);#}
+{#    }#}
+{##}
+{#    #add_button, #return_button {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#      margin-top: 20px;#}
+{#      text-align: center;#}
+{#      display: inline-block;#}
+{#    }#}
+{##}
+{#    #add_button:hover, #return_button:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    .error_msg {#}
+{#      color: #ff4d4d;#}
+{#      margin-bottom: 15px;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <div class="description">{{ website.description }}</div>#}
+{#          <a href="{{ website.url }}" class="url">{{ website.url }}</a>#}
+{#          <form method="POST" action="{% url 'website:edit' website.web_id %}" style="display:inline;">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" class="edit-button" title="编辑网站">Edit</button>#}
+{#          </form>#}
+{#          <form method="POST" action="{% url 'website:delete' website.web_id %}" style="display:inline;">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" class="delete-button" title="确认删除">Delete</button>#}
+{#          </form>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" id="add_button">Add new website</a>#}
+{#    <a href="/user/index" id="return_button">返回用户界面</a>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Website List</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#      font-family: Arial, sans-serif;#}
+{#    }#}
+{##}
+{#    #list_box {#}
+{#      width: 90%;  /* 适应各种屏幕尺寸 */#}
+{#      max-width: 600px;  /* 最大宽度限制 */#}
+{#      background-color: rgba(0, 0, 0, 0.6);  /* 使用rgba增加透明度 */#}
+{#      border-radius: 10px;#}
+      {#padding: 40px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);  /* 添加阴影效果 */#}
+{#    }#}
+{##}
+{#    h1 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    ul {#}
+{#      list-style: none;#}
+{#      padding: 0;#}
+{#      text-align: left;  /* 左对齐 */#}
+{#    }#}
+{##}
+{#    li {#}
+{#      margin-bottom: 15px;  /* 增加间距 */#}
+{#      display: flex;  /* 使用flex布局 */#}
+{#      justify-content: space-between;  /* 列表项间添加空间分配 */#}
+{#      align-items: center;  /* 垂直居中按钮 */#}
+{#    }#}
+{##}
+{#    .description {#}
+{#      flex: 1; /* 左边的描述 */#}
+{#      margin-right: 10px;  /* 右边距 */#}
+{#    }#}
+{##}
+{#    .url {#}
+{#      flex: 2; /* 中间的URL */#}
+{#      color: #30cfd0;#}
+{#      text-decoration: none;#}
+{#    }#}
+{##}
+{#    .url:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{##}
+{#    form {#}
+{#      display: inline;  /* 仍保持为inline，保持灵活性 */#}
+{#    }#}
+{##}
+{#    button {#}
+{#      padding: 5px 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 14px;#}
+{#      cursor: pointer;#}
+{#      transition: background 0.3s;  /* 添加过渡效果 */#}
+{#    }#}
+{##}
+{#    .edit-button {#}
+{#      background-image: linear-gradient(to right, #4d94ff, #003366); /* 蓝色渐变 */#}
+{#    }#}
+{##}
+{#    .edit-button:hover {#}
+{#      opacity: 0.9;#}
+{#      background-image: linear-gradient(to right, #3a8cd1, #00264d); /* 悬停效果 */#}
+{#    }#}
+{##}
+{#    .delete-button {#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a); /* 删除按钮颜色 */#}
+{#    }#}
+{##}
+{#    .delete-button:hover {#}
+{#      opacity: 0.9;#}
+{#      background-image: linear-gradient(to right, #e03434, #9f1d1d); /* 删除按钮悬停效果 */#}
+{#    }#}
+{##}
+{#    #add_button {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#      margin-top: 20px;#}
+{#      text-align: center;#}
+{#      display: inline-block; /* Center the button */#}
+{#    }#}
+{##}
+{#    #add_button:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    .error_msg {#}
+{#      color: #ff4d4d;#}
+{#      margin-bottom: 15px;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <div class="description">{{ website.description }}</div>#}
+{#          <a href="{{ website.url }}" class="url">{{ website.url }}</a>#}
+{#          <form method="POST" action="{% url 'website:edit' website.web_id %}" style="display:inline;">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" class="edit-button" title="编辑网站">Edit</button>#}
+{#          </form>#}
+{#          <form method="POST" action="{% url 'website:delete' website.web_id %}" style="display:inline;">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" class="delete-button" title="确认删除">Delete</button>#}
+{#          </form>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" id="add_button">Add new website</a>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Website List</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#      font-family: Arial, sans-serif;#}
+{#    }#}
+{##}
+{#    #list_box {#}
+{#      width: 90%;  /* 适应各种屏幕尺寸 */#}
+{#      max-width: 600px;  /* 最大宽度限制 */#}
+{#      background-color: rgba(0, 0, 0, 0.6);  /* 使用rgba增加透明度 */#}
+{#      border-radius: 10px;#}
+{#      padding: 40px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);  /* 添加阴影效果 */#}
+{#    }#}
+{##}
+{#    h1 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    ul {#}
+{#      list-style: none;#}
+{#      padding: 0;#}
+{#      text-align: left;  /* 左对齐 */#}
+{#    }#}
+{##}
+{#    li {#}
+{#      margin-bottom: 15px;  /* 增加间距 */#}
+{#      display: flex;  /* 使用flex布局 */#}
+{#      justify-content: space-between;  /* 列表项间添加空间分配 */#}
+{#      align-items: center;  /* 垂直居中按钮 */#}
+{#    }#}
+{##}
+{#    .description {#}
+{#      flex: 1; /* 左边的描述 */#}
+{#      margin-right: 10px;  /* 右边距 */#}
+{#    }#}
+{##}
+{#    .url {#}
+{#      flex: 2; /* 中间的URL */#}
+{#      color: #30cfd0;#}
+{#      text-decoration: none;#}
+{#    }#}
+{##}
+{#    .url:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{##}
+{#    form {#}
+{#      display: inline;  /* 仍保持为inline，保持灵活性 */#}
+{#    }#}
+{##}
+{#    button {#}
+{#      padding: 5px 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 14px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#      transition: background 0.3s;  /* 添加过渡效果 */#}
+{#    }#}
+{##}
+{#    button:hover {#}
+{#      opacity: 0.9;#}
+{#      background-image: linear-gradient(to right, #e03434, #9f1d1d);  /* 修改过渡效果 */#}
+{#    }#}
+{##}
+{#    #add_button {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#      margin-top: 20px;#}
+{#      text-align: center;#}
+{#      display: inline-block; /* Center the button */#}
+{#    }#}
+{##}
+{#    #add_button:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    .error_msg {#}
+{#      color: #ff4d4d;#}
+{#      margin-bottom: 15px;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Website List</title>#}
+{#  <style>#}
+{#    /* Your existing styles */#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <div class="description">{{ website.description }}</div>#}
+{#          <a href="{{ website.url }}" class="url">{{ website.url }}</a>#}
+{#            <form method="POST" action="{% url 'website:edit' website.web_id %}" style="display:inline;">#}
+{#              {% csrf_token %}#}
+{#                <button type="submit" class="edit-button" title="编辑网站">Edit</button>#}
+{#            </form>#}
+{#            <form method="POST" action="{% url 'website:delete' website.web_id %}" style="display:inline;">#}
+{#              {% csrf_token %}#}
+{#              <button type="submit" class="delete-button" title="确认删除">Delete</button>#}
+{#            </form>#}
+{#          </div>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" id="add_button">Add new website</a>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+
+{#            <form method="POST" action="{% url 'website:edit' website.web_id %}" style="display:inline;">#}
+{#              {% csrf_token %}#}
+{#              <button type="submit" class="edit-button" title="编辑网站">Edit</button>#}
+{#            </form>#}
+
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <div class="description">{{ website.description }}</div>#}
+{#          <a href="{{ website.url }}" class="url">{{ website.url }}</a>#}
+{#          <form method="POST" action="{% url 'website:delete' website.web_id %}">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" title="确认删除">Delete</button>#}
+{#          </form>#}
+{#            <form method="POST" action="{% url 'website:edit' website.web_id %}">#}
+{#            {% csrf_token %}#}
+{#            <a href="{% url 'website:edit' website.web_id %}" class="button">Edit</a>#}
+{#          </form>#}
+{##}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" id="add_button">Add new website</a>#}
+{#  </div>#}
+{#</body>#}
+
+
+{# 改进版#}
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <div class="description">{{ website.description }}</div>  <!-- 描述 -->#}
+{#          <a href="{{ website.url }}" class="url">{{ website.url }}</a>  <!-- 网址 -->#}
+{#          <form method="POST" action="{% url 'website:delete' website.web_id %}">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" title="确认删除">Delete</button>  <!-- 删除按钮 -->#}
+{#          </form>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" id="add_button">Add new website</a> <!-- 增加网站的按钮 -->#}
+{#  </div>#}
+{#</body>#}
+
+
+
+
+
+{#还不错，不过还是有一些地方需要改进。#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Website List</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#      font-family: Arial, sans-serif;#}
+{#    }#}
+{##}
+{#    #list_box {#}
+{#      width: 90%;  /* 适应各种屏幕尺寸 */#}
+{#      max-width: 400px;  /* 最大宽度限制 */#}
+{#      background-color: rgba(0, 0, 0, 0.6);  /* 使用rgba增加透明度 */#}
+{#      border-radius: 10px;#}
+{#      padding: 40px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);  /* 添加阴影效果 */#}
+{#    }#}
+{##}
+{#    h1 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    ul {#}
+{#      list-style: none;#}
+{#      padding: 0;#}
+{#      text-align: left;  /* 左对齐 */#}
+{#    }#}
+{##}
+{#    li {#}
+{#      margin-bottom: 15px;  /* 增加间距 */#}
+{#      display: flex;  /* 使用flex布局 */#}
+{#      justify-content: space-between;  /* 列表项间添加空间分配 */#}
+{#      align-items: center;  /* 垂直居中按钮 */#}
+{#    }#}
+{##}
+{#    a {#}
+{#      color: #30cfd0;#}
+{#      text-decoration: none;#}
+{#      flex: 1;  /* 使链接占据剩余空间 */#}
+{#    }#}
+{##}
+{#    a:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{##}
+{#    form {#}
+{#      display: inline;  /* 仍保持为inline，保持灵活性 */#}
+{#    }#}
+{##}
+{#    button {#}
+{#      padding: 5px 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 14px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#      transition: background 0.3s;  /* 添加过渡效果 */#}
+{#    }#}
+{##}
+{#    button:hover {#}
+{#      opacity: 0.9;#}
+{#      background-image: linear-gradient(to right, #e03434, #9f1d1d);  /* 修改过渡效果 */#}
+{#    }#}
+{##}
+{#    #add_button {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#      margin-top: 20px;#}
+{#      text-align: center;#}
+{#      display: inline-block; /* Center the button */#}
+{#    }#}
+{##}
+{#    #add_button:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    .error_msg {#}
+{#      color: #ff4d4d;#}
+{#      margin-bottom: 15px;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <a href="{{ website.url }}">{{ website.url }}</a> #}
+{#          <form method="POST" action="{% url 'website:delete' website.web_id %}">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" title="确认删除">Delete</button>#}
+{#          </form>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" id="add_button">Add new website</a> <!-- 这里的按钮直接作为链接 -->#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
+
+
+
+{#乱的样式#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Website List</title>#}
+{#  <style>#}
+{#    body {#}
+{#      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#      margin: 0;#}
+{#    }#}
+{##}
+{#    #list_box {#}
+{#      width: 300px;#}
+{#      background-color: #00000060;#}
+{#      border-radius: 10px;#}
+{#      padding: 30px;#}
+{#      text-align: center;#}
+{#      color: #fff;#}
+{#    }#}
+{##}
+{#    h1 {#}
+{#      color: #ffffff90;#}
+{#      margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    ul {#}
+{#      list-style: none;#}
+{#      padding: 0;#}
+{#    }#}
+{##}
+{#    li {#}
+{#      margin-bottom: 10px;#}
+{#    }#}
+{##}
+{#    a {#}
+{#      color: #30cfd0;#}
+{#      text-decoration: none;#}
+{#    }#}
+{##}
+{#    a:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{##}
+{#    form {#}
+{#      display: inline;#}
+{#    }#}
+{##}
+{#    button {#}
+{#      padding: 5px 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 14px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #ff4d4d, #a71d2a);#}
+{#    }#}
+{##}
+{#    button:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{##}
+{#    .btn {#}
+{#      width: 100%;#}
+{#      padding: 10px;#}
+{#      border: none;#}
+{#      border-radius: 5px;#}
+{#      color: #fff;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      background-image: linear-gradient(to right, #30cfd0, #330867);#}
+{#      text-decoration: none;#}
+{#      display: inline-block;#}
+{#      text-align: center;#}
+{#      margin-top: 20px;#}
+{#    }#}
+{##}
+{#    .btn:hover {#}
+{#      opacity: 0.9;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div id="list_box">#}
+{#    <h1>Website List</h1>#}
+{#    <ul>#}
+{#      {% for website in websites %}#}
+{#        <li>#}
+{#          <a href="{{ website.url }}">{{ website.url }}</a> - {{ website.description }}#}
+{#          <form method="POST" action="{% url 'website:delete' website.web_id %}">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit">Delete</button>#}
+{#          </form>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+{#    <a href="{% url 'website:add' %}" class="btn">Add new website</a>#}
+{#  </div>#}
+{#</body>#}
+{#</html>#}
 
 {#第一次对齐样式 list_websites.html#}
 {#<!DOCTYPE html>#}

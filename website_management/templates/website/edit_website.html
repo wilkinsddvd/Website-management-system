@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Website</title>
+  <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #edit_box {
+      width: 90%;
+      max-width: 600px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      color: #ffffff90;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      text-align: left;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+      text-decoration: none;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    a {
+      color: #30cfd0;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="edit_box">
+    <h1>Edit Website</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="url">URL:</label>
+      <input type="url" id="url" name="url" value="{{ website.url }}" required>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description">{{ website.description }}</textarea>
+      <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'website:list' %}">Cancel</a>
+  </div>
+</body>
+</html>
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Edit Website</title>#}
+{#</head>#}
+{#<body>#}
+{#  <h1>Edit Website</h1>#}
+{#  <form method="POST">#}
+{#    {% csrf_token %}#}
+{#    <label for="url">URL:</label>#}
+{#    <input type="url" id="url" name="url" value="{{ website.url }}" required>#}
+{#    <br>#}
+{#    <label for="description">Description:</label>#}
+{#    <textarea id="description" name="description">{{ website.description }}</textarea>#}
+{#    <br>#}
+{#    <button type="submit">Save</button>#}
+{#  </form>#}
+{#  <a href="{% url 'website:list' %}">Cancel</a>#}
+{#</body>#}
+{#</html>#}
