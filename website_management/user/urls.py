@@ -1,6 +1,6 @@
 from django.urls import path,include
 from . import views
-
+from webmarks import views as webmarks_views
 # 路由模块名称
 app_name = 'user'
 
@@ -12,7 +12,6 @@ urlpatterns = [
         path('login/', views.author_login, name='login'),
         path('logout/', views.user_logout, name='logout'),
         path('re_password/', views.user_re_password, name='re_password'),
-
         # path('', views.index, name='index'),
     ])),
 ]

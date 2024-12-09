@@ -5,3 +5,4 @@ def index(request):
 
 def login_page(request):
     return render(request, 'user/login.html')
+

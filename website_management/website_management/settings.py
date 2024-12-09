@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v)x#$9dll^f+y)v&j@mlsssf4siljqekri)ia9n8re@k)zrjsi'
+SECRET_KEY = 'django-insecure-uf59y5z3bm8+)shwz)j9mc2%bhqy5=v!)i*@ec!_r-lyomk1me'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'website',
-    'index'
+    'index',
+    'webmarks'
 ]
 
 MIDDLEWARE = [
@@ -81,13 +82,15 @@ DATABASES = {
     'default':
     {
         'ENGINE': 'django.db.backends.mysql',    # 数据库引擎
-        'NAME': 'website_management_pro', # 数据库名称
+        'NAME': 'website_management_pro_max', # 数据库名称
         'HOST': '127.0.0.1', # 数据库地址，本机 ip 地址 127.0.0.1
         'PORT': 3306, # 端口
         'USER': 'root',  # 数据库用户名
         'PASSWORD': '123456', # 数据库密码
     }
 }
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -117,7 +120,6 @@ TIME_ZONE = 'Asia/Shanghai'  # 设置时区
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

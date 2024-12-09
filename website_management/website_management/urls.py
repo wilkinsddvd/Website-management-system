@@ -22,4 +22,6 @@ urlpatterns = [
     path('', include('user.urls')),
     path('', include('index.urls')),
     path('', include('website.urls')),
+    path('', include('webmarks.urls')),
+
 ]

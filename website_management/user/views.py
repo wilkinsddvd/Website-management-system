@@ -84,15 +84,29 @@ def user_re_password(request):
         new_password = request.POST.get('new_password')
 
     author = User.objects.filter(username=username,password=password)
-    if author.exists():
-        author1 = User(username=username, password=new_password)
-        author1.save()
-        author.delete()
-        return render(request, 'user/login.html',
-                      {'msg_code': 0, 'msg_info': 'Account registered successfully, please login.'})
-    else:
+
+    if not author.exists():
         return render(request, 'user/re_password.html',
                       {'msg_code': 0, 'msg_info': 'Username or password is incorrect, please try again'})
+
+    if password == new_password:
+        return render(request, 'user/re_password.html',
+                      {'msg_code': 0, 'msg_info': 'New password cannot be the same as the old password'})
+
+    author.update(password=new_password)
+    return render(request, 'user/login.html',
+                  {'msg_code': 0, 'msg_info': 'Password reset successfully, please login.'})
+
+    # bug修复
+    # if author.exists():
+    #     author1 = User(username=username, password=new_password)
+    #     author1.save()
+    #     author.delete()
+    #     return render(request, 'user/login.html',
+    #                   {'msg_code': 0, 'msg_info': 'Account registered successfully, please login.'})
+    # else:
+    #     return render(request, 'user/re_password.html',
+    #                   {'msg_code': 0, 'msg_info': 'Username or password is incorrect, please try again'})
 
 
 from django.contrib.auth import logout
